@@ -1,0 +1,18 @@
+# Files
+*.pyc
+creds.txt
+.DS_STORE
+
+# Testing
+data/
+screenshots/
+*.png
+
+# Environment
+.vscode/
+.venv/
+
+# Python
+.cache/
+__pycache__/
+.pytest_cache/
