@@ -4,9 +4,11 @@ from src.wn_scraper.webpage import get_7_day_forecast_image
 from src.wn_scraper.ocr import get_text
 from src.wn_scraper.data import get_wn_pop_data
 
+forecast_url = 'https://www.theweathernetwork.com/ca/14-day-weather-trend/ontario/london'
+
 def get_forecast_data() -> None:
   # Get the forecast image
-  image_data = get_7_day_forecast_image()
+  image_data = get_7_day_forecast_image(forecast_url)
 
   # Run the OCR
   with open('/Users/calvindelima/ldn-weekly-rain-day-predictions/tests/creds.txt', 'r') as f:
