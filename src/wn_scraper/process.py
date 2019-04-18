@@ -1,7 +1,7 @@
 import pandas as pd
-from src.wn_scraper.webpage import get_7_day_forecast_image
-from src.wn_scraper.ocr import get_text
-from src.wn_scraper.data import get_wn_pop_data
+from wn_scraper.webpage import get_7_day_forecast_image
+from wn_scraper.ocr import get_text
+from wn_scraper.data import get_wn_pop_data
 
 def get_forecast_data(creds: str, forecast_url: str) -> pd.DataFrame:
   # Get the forecast image

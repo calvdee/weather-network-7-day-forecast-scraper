@@ -5,18 +5,21 @@ def cli():
   pass
 
 @cli.command()
-@click.argument('screenshot_path', default='screenshots')
-def get_7_day_forecast(screenshot_path: str):
-  from wn_scraper.webpage import save_7_day_forecast_image
+@click.argument('creds', required=True)
+@click.argument('furl', required=True)
+@click.argument('dpath', required=False)
+def get_7_day_forecast(creds: str, furl: str, dpath: str) -> None:
+  from wn_scraper.process import get_forecast_data
   from datetime import datetime
 
-  file_name = '7-day-forecast'
-  screenshot_path = '{}/{}-{}.png'.format(
-    screenshot_path,
-    file_name, 
-    datetime.now())
+  if dpath is None or dpath == '':
+    dpath = 'data/7-day-forecast-{}.csv'.format(
+      data_path,
+      datetime.now()
+    )
 
-  save_7_day_forecast_image(True, True, screenshot_path)
+  data = get_forecast_data(creds, forecast_url)
+  data.to_csv(dpath, index=False)
 
 if __name__ == '__main__':
   cli()

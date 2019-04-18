@@ -9,5 +9,3 @@ def test_run_process():
     datetime.now()
   )
   get_forecast_data(CREDS, FORECAST_URL).to_csv(file_name, index=False)
-
-
