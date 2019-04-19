@@ -1,6 +1,7 @@
 from datetime import datetime
 from src.wn_scraper.process import get_forecast_data
-from support.constants import FORECAST_URL, CREDS
+from support.creds import VISION_API_CREDS
+from support.constants import FORECAST_URL
 
 def test_run_process():
   data_path = 'data/'
@@ -8,4 +9,4 @@ def test_run_process():
     data_path,
     datetime.now()
   )
-  get_forecast_data(CREDS, FORECAST_URL).to_csv(file_name, index=False)
+  get_forecast_data(VISION_API_CREDS, FORECAST_URL).to_csv(file_name, index=False)

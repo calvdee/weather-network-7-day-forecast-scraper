@@ -1,6 +1,6 @@
 # Files
 *.pyc
-creds.txt
+tests/support/creds.py
 .DS_STORE
 
 # Testing
