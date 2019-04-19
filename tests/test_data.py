@@ -1,25 +1,12 @@
+from support import get_text_data
 from src.wn_scraper.data import get_wn_pop_data
 
 def test_get_wn_pop_data():
-  pops = [
-    '90 %',
-    '80 %',
-    '70 %',
-    '60 %',
-    '50 %',
-    '40 %',
-    '30 %'
-  ]
+  text_data = get_text_data()
 
-  precips = [
-    '10 mm',
-    '9 mm',
-    '8 mm',
-    '7 mm'
-  ]
+  pops = list(filter(lambda text: '%' in text, text_data))
 
-  data = get_wn_pop_data(pops + precips)
+  data = get_wn_pop_data(text_data)
 
   # Only keeping pop values for now
   assert len(data) == len(pops)
-  print(data)
