@@ -16,7 +16,6 @@ Unit tests. Requires a file called `creds.txt` in this folder that contains the 
 
 ## TODO
 * Handle errors in OCR service.
-* Develop storage abstraction to save to different storage providers.
 * Extract the Azure Cognitive Services url.
 
 ## License

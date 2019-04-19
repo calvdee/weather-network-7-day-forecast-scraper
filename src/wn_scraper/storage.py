@@ -12,3 +12,32 @@ class DataFrameFileStorage:
       self.data.to_csv(file, **kwargs)
     else:
       raise Exception('save requires `file_path` or `file`.')
+
+class DataFrameAzureTableStorage:
+  def __init__(self, data: object) -> None:
+    self.data = data
+
+  def save(self, storage_account: str, key: str) -> None:
+    from azure.cosmosdb.table.tableservice import TableService
+    from azure.cosmosdb.table.models import Entity
+    from azure.cosmosdb.table.tablebatch import TableBatch
+    
+    # Create the table storage object
+    ts = TableService(account_name=storage_account, account_key=key)
+
+    # Create the records from the data
+    records = (
+      self.data
+        .assign(date_retrieved=lambda df: df['date_retrieved'].dt.date)
+        .rename(columns={
+          'date_retrieved': 'PartitionKey',
+          'date_forecast': 'RowKey'
+        })
+        .astype(str)
+        .to_dict(orient='records')
+    )
+
+    # Add the data to the batch and save it
+    batch = TableBatch()
+    list(map(batch.insert_entity, records))
+    ts.commit_batch('WeatherNetworkForecasts', batch)
