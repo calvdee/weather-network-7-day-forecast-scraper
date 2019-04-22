@@ -1,3 +1,4 @@
+import logging
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 from .driver import get_driver
@@ -29,16 +30,16 @@ def save_7_day_forecast_image(forecast_url: str, screenshot_path: str, headless=
     headless (bool): Whether the driver should create a GUI.
   """
   driver = get_driver(headless=headless)
-  print('Getting webpage')
+  logging.info('Getting webpage')
   driver.get(forecast_url)      
 
-  print('Navigating to element')
+  logging.debug('Navigating to element')
   forecast_el = _move_to_element(driver, 'fourteen-day-periods')
 
   assert screenshot_path is not None
-  print('Saving screenshot')
+  logging.debug('Saving screenshot')
   _save_screenshot(driver, screenshot_path)
-  print('Saved screenshot to {}'.format(screenshot_path))
+  logging.info('Saved screenshot to {}'.format(screenshot_path))
 
   driver.close()
 
@@ -52,13 +53,13 @@ def get_7_day_forecast_image(forecast_url: str, headless=True) -> None:
     headless (bool): Whether the driver should create a GUI.
   """
   driver = get_driver(headless=headless)
-  print('Getting webpage')
+  logging.info('Getting webpage')
   driver.get(forecast_url)      
 
-  print('Navigating to element')
+  logging.debug('Navigating to element')
   forecast_el = _move_to_element(driver, 'fourteen-day-periods')
 
   image_data = _get_screenshot_data(driver)
-  print('Took screenshot')
+  logging.info('Took screenshot')
 
   return image_data

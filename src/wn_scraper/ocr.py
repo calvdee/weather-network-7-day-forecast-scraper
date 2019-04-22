@@ -1,10 +1,11 @@
+import logging
 import requests 
 import time
 from typing import List
 from urllib import parse
 
-VISION_BASE_URL_V1 = 'https://canadacentral.api.cognitive.microsoft.com/vision/v1.0/'
-VISION_BASE_URL_V2 = 'https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/'
+VISION_BASE_URL_V1 = 'https://eastus.api.cognitive.microsoft.com/vision/v1.0/'
+VISION_BASE_URL_V2 = 'https://eastus.api.cognitive.microsoft.com/vision/v2.0/'
 
 def _get_operation_location_result(creds: str, image: str) -> str:
   """
@@ -37,7 +38,7 @@ def _get_text_analysis(creds: str, operation_result_id: str) -> dict:
   n = 1
   result_url = VISION_BASE_URL_V2 + 'textOperations/' + operation_result_id
   
-  print('Attempt #{} to retrieve text analysis'.format(n))
+  logging.debug('Attempt #{} to retrieve text analysis'.format(n))
   response_json = requests.get(result_url, headers=headers).json()
   
   while response_json['status'] not in ['Succeeded', 'Failed']:
@@ -45,10 +46,10 @@ def _get_text_analysis(creds: str, operation_result_id: str) -> dict:
     # Wait for a bit
     time.sleep(0.5)
     # Try again
-    print('Attempt #{} to retrieve text analysis'.format(n))
+    logging.debug('Attempt #{} to retrieve text analysis'.format(n))
     response_json = requests.get(result_url, headers=headers).json()
   
-  print('Retrieved text analysis in {} attempts'.format(n))
+  logging.info('Retrieved text analysis in {} attempts'.format(n))
   return response_json
 
 def get_text(creds: str, image: str) -> List[str]:
@@ -70,5 +71,5 @@ def get_text(creds: str, image: str) -> List[str]:
   get_text = lambda line: line['text']
   texts = list(map(get_text, lines))
   
-  print('Extracted text from {} lines'.format(len(texts)))
+  logging.info('Extracted text from {} lines'.format(len(texts)))
   return texts
