@@ -12,6 +12,10 @@ def get_driver(headless=True) -> webdriver.Chrome:
   """
   options = webdriver.ChromeOptions()   
   options.add_argument('--ignore-certificate-errors')  
+  
+  # Resolves selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally
+  options.add_argument('--disable-dev-shm-usage') 
+  options.add_argument('--no-sandbox') 
 
   if headless:
     options.add_argument('headless')  
