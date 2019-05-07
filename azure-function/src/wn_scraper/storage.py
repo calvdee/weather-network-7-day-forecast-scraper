@@ -1,5 +1,3 @@
-import logging
-
 class DataFrameFileStorage:
   def __init__(self: object, data: object) -> None:
     self.data = data
@@ -15,8 +13,6 @@ class DataFrameFileStorage:
     else:
       raise Exception('save requires `file_path` or `file`.')
 
-    logging.info('Saved data to', file_path)
-
 class DataFrameAzureTableStorage:
   def __init__(self, data: object) -> None:
     self.data = data
@@ -26,8 +22,6 @@ class DataFrameAzureTableStorage:
     from azure.cosmosdb.table.models import Entity
     from azure.cosmosdb.table.tablebatch import TableBatch
     
-    TABLE_NAME = 'WeatherNetworkForecasts'
-
     # Create the table storage object
     ts = TableService(account_name=storage_account, account_key=key)
 
@@ -46,6 +40,4 @@ class DataFrameAzureTableStorage:
     # Add the data to the batch and save it
     batch = TableBatch()
     list(map(batch.insert_entity, records))
-    ts.commit_batch(TABLE_NAME, batch)
-
-    logging.info('Saved {} records to {}'.format(len(records), TABLE_NAME))
+    ts.commit_batch('WeatherNetworkForecasts', batch)

@@ -1,3 +1,4 @@
+import chromedriver_binary
 from selenium import webdriver 
 
 def get_driver(headless=True) -> webdriver.Chrome:
@@ -11,10 +12,13 @@ def get_driver(headless=True) -> webdriver.Chrome:
   """
   options = webdriver.ChromeOptions()   
   options.add_argument('--ignore-certificate-errors')  
+  
+  # Resolves selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally
+  options.add_argument('--disable-dev-shm-usage') 
+  options.add_argument('--no-sandbox') 
 
   if headless:
     options.add_argument('headless')  
         
-  options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"  
-  driver = webdriver.Chrome('/Users/calvindelima/bin/chromedriver-73', chrome_options=options)
+  driver = webdriver.Chrome(chrome_options=options)
   return driver
