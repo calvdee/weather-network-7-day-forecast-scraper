@@ -2,6 +2,7 @@
 *.pyc
 tests/support/creds.py
 .DS_STORE
+docker-commands.txt
 
 # Testing
 data/
