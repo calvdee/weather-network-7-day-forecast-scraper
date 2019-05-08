@@ -2,7 +2,10 @@ DOCKER_REPO=cdlm/weather-network-forecast-scraper
 
 .PHONY: clean-pyc
 
-build-function: clean-pyc  copy-src 
+build-function: clean-pyc  copy-src build-docker push-docker
+
+push-docker:
+	docker push $(DOCKER_REPO)
 
 build-docker:
 	docker build --tag $(DOCKER_REPO) .  
